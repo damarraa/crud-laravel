@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Data Authors</title>
+    <title>Data Books</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 
@@ -15,33 +15,38 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="">
-                    <h3 class="text-center my-4">Data Authors</h3>
+                    <h3 class="text-center my-4">All Books</h3>
                     <hr>
                 </div>
                 <div class="card border-0 shadow-sm rounded">
                     <div class="card-body">
-                        <a href="{{ route('books.index') }}" class="btn btn-md btn-primary mb-3 ml-3">Books Data</a>
-                        <a href="{{ route('authors.create') }}" class="btn btn-md btn-success mb-3">Add Author</a>
+                        <a href="{{ route('books.create') }}" class="btn btn-md btn-success mb-3">Add Book</a>
                         <table class="table table-bordered">
                             <thead>
                                 <tr class="text-center">
-                                    <th scope="col">Author</th>
-                                    <th scope="col">Bio</th>
-                                    <th scope="col">Birth Date</th>
+                                    <th scope="col">Cover</th>
+                                    <th scope="col">Title</th>
+                                    <th scope="col">Description</th>
+                                    <th scope="col">Publish Date</th>
+                                    <th scope="col">Price</th>
+                                    <th scope="col">Stock</th>
                                     <th scope="col" style="width: 20%">Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @forelse ($authors as $author)
+                                @forelse ($books as $book)
                                     <tr>
-                                        <td class="text-center">{{ $author->name }}</td>
-                                        <td class="text-center">{{ $author->bio }}</td>
-                                        <td class="text-center">{{ $author->birth_date }}</td>
+                                        <td class="text-center"><img src="{{ asset('storage/' . $book->cover) }}" alt="Book Cover" style="height: auto; width: 250px"></td>
+                                        <td class="text-center">{{ $book->title }}</td>
+                                        <td class="text-center">{{ $book->description }}</td>
+                                        <td class="text-center">{{ $book->publish_date }}</td>
+                                        <td class="text-center">{{ $book->price }}</td>
+                                        <td class="text-center">{{ $book->stock }}</td>
                                         <td class="text-center">
-                                            <form action="{{ route('authors.destroy', $author->id) }}" method="POST">
-                                                <a href="{{ route('authors.show', $author->id) }}"
+                                            <form action="{{ route('books.destroy', $book->id) }}" method="POST">
+                                                <a href="{{ route('books.show', $book->id) }}"
                                                     class="btn btn-sm btn-dark">SHOW</a>
-                                                <a href="{{ route('authors.edit', $author->id) }}"
+                                                <a href="{{ route('books.edit', $book->id) }}"
                                                     class="btn btn-sm btn-primary">EDIT</a>
                                                 @csrf
                                                 @method('DELETE')
@@ -51,12 +56,12 @@
                                     </tr>
                                 @empty
                                     <div class="alert alert-danger">
-                                        Data Authors is Empty.
+                                        Data Books is Empty.
                                     </div>
                                 @endforelse
                             </tbody>
                         </table>
-                        {{ $authors->links() }}
+                        {{ $books->links() }}
                     </div>
                 </div>
             </div>
@@ -68,7 +73,7 @@
 
     <script>
         //message with sweetalert
-        @if(session('success'))
+        @if (session('success'))
             Swal.fire({
                 icon: "success",
                 title: "SUCCESS!",
@@ -76,7 +81,7 @@
                 showConfirmButton: false,
                 timer: 2000
             });
-        @elseif(session('error'))
+        @elseif (session('error'))
             Swal.fire({
                 icon: "error",
                 title: "ERROR!",
@@ -85,7 +90,6 @@
                 timer: 2000
             });
         @endif
-
     </script>
 
 </body>
